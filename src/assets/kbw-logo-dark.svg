@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Knox Buildworks mark">
+  <path d="M16 21 4 15v4l12 6 12-6v-4l-12 6Z" fill="#a6b89a" fill-opacity=".18" stroke="#b9c6b0" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M4 15 16 9v-6L4 9Z" fill="#b9a76a" fill-opacity=".1" stroke="#a6b89a" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M28 15 16 9v-6l12 6Z" fill="#a6b89a" fill-opacity=".28" stroke="#b9c6b0" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M16 12.5 21 15l-5 2.5L11 15Z" fill="#83b98a"/>
+</svg>

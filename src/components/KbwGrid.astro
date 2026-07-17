@@ -1,0 +1,31 @@
+---
+interface Props {
+  min?: string;
+  bento?: boolean;
+}
+
+const { min = '16rem', bento = false } = Astro.props;
+---
+
+<div class:list={['kbw-grid', 'not-content', { bento }]} style={`--kbw-grid-min: ${min};`}>
+  <slot />
+</div>
+
+<style>
+  .kbw-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--kbw-grid-min), 100%), 1fr));
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+
+  .kbw-grid.bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 56rem) {
+    .kbw-grid.bento {
+      grid-template-columns: repeat(auto-fit, minmax(min(var(--kbw-grid-min), 100%), 1fr));
+    }
+  }
+</style>

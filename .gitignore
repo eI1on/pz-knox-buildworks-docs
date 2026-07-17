@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+*.local
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

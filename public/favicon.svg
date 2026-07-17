@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Knox Buildworks</title>
+  <rect width="64" height="64" rx="10" fill="#121310"/>
+  <path d="M12 45 32 33l20 12-20 12Z" fill="#20231d" stroke="#a6b89a" stroke-width="2"/>
+  <path d="M12 28 32 16l20 12-20 12Z" fill="#191b17" stroke="#95a78a" stroke-width="2"/>
+  <path d="M12 28v17l20 12V40Z" fill="#1d201a" stroke="#95a78a" stroke-width="2"/>
+  <path d="M52 28v17L32 57V40Z" fill="#293026" stroke="#b9c6b0" stroke-width="2"/>
+  <path d="m23 34 9-5 9 5-9 5Z" fill="#83b98a"/>
+</svg>

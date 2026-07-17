@@ -1,0 +1,206 @@
+---
+import KbwIcon from './KbwIcon.astro';
+import type { ComponentProps } from 'astro/types';
+
+interface QuickLink {
+  text: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  icon: ComponentProps<typeof KbwIcon>['name'];
+  href?: string;
+  cta?: string;
+  links?: QuickLink[];
+  wide?: boolean;
+}
+
+const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.props;
+---
+
+<article class:list={['kbw-card', { 'is-link': !!href, wide }]}>
+  <div class="kbw-card-head">
+    <span class="kbw-card-icon"><KbwIcon name={icon} size="1.35rem" /></span>
+    <h3 class="kbw-card-title">
+      {href ? <a href={href}>{title}</a> : title}
+    </h3>
+  </div>
+  <div class="kbw-card-body"><slot /></div>
+  {
+    links && links.length > 0 && (
+      <ul class="kbw-card-links">
+        {links.map((link) => (
+          <li>
+            <a href={link.href}>{link.text}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    href && (
+      <p class="kbw-card-cta" aria-hidden="true">
+        {cta}
+        <KbwIcon name="arrow" size="0.95em" />
+      </p>
+    )
+  }
+</article>
+
+<style>
+  .kbw-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.35rem 1.4rem 1.4rem;
+    border: 1px solid var(--kbw-line-soft);
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--kbw-surface) 88%, transparent);
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .kbw-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--kbw-accent);
+    opacity: 0;
+  }
+
+  .kbw-card.is-link:hover {
+    border-color: var(--kbw-line);
+    background: color-mix(in srgb, var(--kbw-accent) 5%, var(--kbw-surface-raised));
+  }
+
+  .kbw-card.is-link:hover::before {
+    opacity: 0.9;
+  }
+
+  .kbw-card.wide {
+    grid-column: span 2;
+    background:
+      linear-gradient(var(--kbw-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--kbw-grid-line) 1px, transparent 1px),
+      color-mix(in srgb, var(--kbw-surface) 82%, transparent);
+    background-size: 28px 28px, 28px 28px, auto;
+  }
+
+  @media (max-width: 56rem) {
+    .kbw-card.wide {
+      grid-column: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .kbw-card {
+      transition: border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .kbw-card::before {
+      transition: opacity 150ms ease;
+    }
+
+    .kbw-card-cta :global(svg) {
+      transition: translate 150ms ease;
+    }
+
+    .kbw-card.is-link:hover .kbw-card-cta :global(svg) {
+      translate: 3px 0;
+    }
+  }
+
+  .kbw-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .kbw-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--kbw-line);
+    background: color-mix(in srgb, var(--kbw-accent) 10%, transparent);
+    color: var(--kbw-accent-bright);
+  }
+
+  .kbw-card-title {
+    margin: 0;
+    font-size: var(--sl-text-lg);
+    line-height: 1.25;
+    color: var(--sl-color-white);
+  }
+
+  .kbw-card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .kbw-card-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .kbw-card-body {
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+  }
+
+  .kbw-card-body :global(p) {
+    margin: 0;
+  }
+
+  .kbw-card-links {
+    margin: 0;
+    padding: 0.15rem 0 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: var(--sl-text-sm);
+  }
+
+  .kbw-card-links li {
+    padding-inline-start: 0.9rem;
+    background:
+      linear-gradient(var(--kbw-gold-dim), var(--kbw-gold-dim)) no-repeat left
+      0.55em / 0.4rem 1px;
+  }
+
+  .kbw-card-links a {
+    position: relative;
+    z-index: 1;
+    color: var(--sl-color-gray-1);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--kbw-gold) 40%, transparent);
+    text-underline-offset: 0.2em;
+  }
+
+  .kbw-card-links a:hover {
+    color: var(--kbw-gold-bright);
+  }
+
+  .kbw-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: auto 0 0;
+    padding-top: 0.35rem;
+    font-size: var(--sl-text-xs);
+    font-weight: 650;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--kbw-gold);
+  }
+</style>

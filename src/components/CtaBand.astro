@@ -1,0 +1,123 @@
+---
+import KbwIcon from './KbwIcon.astro';
+
+interface Action {
+  text: string;
+  href: string;
+  variant?: 'primary' | 'secondary';
+}
+
+interface Props {
+  title: string;
+  actions: Action[];
+}
+
+const { title, actions } = Astro.props;
+---
+
+<section class="kbw-cta not-content">
+  <div class="kbw-cta-copy">
+    <h2>{title}</h2>
+    <p><slot /></p>
+  </div>
+  <div class="kbw-cta-actions">
+    {
+      actions.map((action) => (
+        <a
+          class:list={['kbw-cta-button', action.variant === 'secondary' ? 'secondary' : 'primary']}
+          href={action.href}
+        >
+          {action.text}
+          <KbwIcon name="arrow" size="1.05em" />
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .kbw-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem 2rem;
+    margin-top: 3.5rem;
+    padding: clamp(1.7rem, 3vw, 2.5rem);
+    border: 1px solid var(--kbw-line);
+    border-radius: 0.5rem;
+    background: var(--kbw-surface);
+  }
+
+  .kbw-cta-copy {
+    max-width: 32rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: var(--sl-text-2xl);
+    letter-spacing: -0.015em;
+    color: var(--sl-color-white);
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+    color: var(--sl-color-gray-2);
+  }
+
+  .kbw-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .kbw-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.62rem 1.15rem;
+    min-height: 2.75rem;
+    border-radius: 0.5rem;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+
+  .kbw-cta-button.primary {
+    background: var(--kbw-accent);
+    color: var(--sl-color-black);
+    box-shadow: none;
+  }
+
+  .kbw-cta-button.primary:hover {
+    background: var(--kbw-accent-bright);
+  }
+
+  .kbw-cta-button.secondary {
+    border-color: var(--sl-color-gray-4);
+    color: var(--sl-color-white);
+    background: color-mix(in srgb, var(--kbw-surface) 70%, transparent);
+  }
+
+  .kbw-cta-button.secondary:hover {
+    border-color: var(--kbw-gold);
+    color: var(--kbw-gold-bright);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .kbw-cta-button {
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+
+    .kbw-cta-button :global(svg) {
+      transition: translate 140ms ease;
+    }
+
+    .kbw-cta-button:hover :global(svg) {
+      translate: 3px 0;
+    }
+  }
+</style>

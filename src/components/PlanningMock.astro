@@ -1,0 +1,492 @@
+---
+import GameGlyph from './GameGlyph.astro';
+
+const totals = [
+  { glyph: 'clay', label: 'Clay x20' },
+  { glyph: 'hinge', label: 'Door Hinge x2' },
+  { glyph: 'pipe', label: 'Iron Pipe x3' },
+  { glyph: 'nails', label: 'Nails x4' },
+  { glyph: 'plank', label: 'Plank x4' },
+  { glyph: 'scrap', label: 'Scrap Metal x4' },
+  { glyph: 'rods', label: 'Welding Rods x4' },
+  { glyph: 'torch', label: 'Welding Torch x4' },
+  { glyph: 'hammer', label: 'Hammer x1' },
+  { glyph: 'trowel', label: 'MasonsTrowel x1' }
+] as const;
+
+const catalogRows = [
+  { glyph: 'forge', name: 'Advanced Forge', sub: 'Blacksmithing / Workstations - kbw.vanilla.advanced_f...', active: true, fav: true },
+  { glyph: 'wall', name: 'Wooden Wall', sub: 'Walls / Walls - kbw.group.vanilla_woodenwall' },
+  { glyph: 'bed', name: 'Bed', sub: 'Furniture / Furniture - kbw.vanilla.wood_bed', fav: true },
+  { glyph: 'doorframe', name: 'Brick Door Frame', sub: 'Doors / Door Frames - kbw.group.vanilla_brickdoorfra...', fav: true },
+  { glyph: 'amphora', name: 'Amphora', sub: 'Outdoors / Outdoors - kbw.vanilla.amphora' },
+  { glyph: 'antlers', name: 'Antlers Pole', sub: 'Outdoors / Outdoors - kbw.vanilla.skullpoleantlers' }
+] as const;
+
+const planned = [
+  { name: 'Wooden Wall Frame', at: 'built 13152,7306 z0', active: true },
+  { name: 'Amphora', at: 'built 13152,7307 z0' },
+  { name: 'Amphora', at: 'built 13152,7305 z0' },
+  { name: 'Wooden Wall Frame', at: 'built 13152,7302 z0' },
+  { name: 'Big Wire Fence Gate', at: 'built 12955,7357 z0' }
+] as const;
+
+const swatches = ['#4f7bd9', '#4fae5f', '#c9a94f', '#9a5fd0', '#4fb8ae', '#d0824f', '#d05f7b', '#c95fb8', '#8a8a8a', '#e8e8e8', '#5f6bd0', '#8fd05f', '#d0a54f', '#b88fd0'];
+---
+
+<figure class="kbw-uimock not-content" role="img" aria-label="Annotated wireframe of Knox Planning Mode">
+  <div class="scene">
+    <div class="pmwindow left">
+      <div class="pmtitle">Knox Planning Mode<span class="badge" data-n="1">1</span></div>
+      <div class="cols">
+        <div class="col">
+          <p class="head">Blueprints<span class="badge" data-n="2">2</span></p>
+          <p class="bp-card"><strong>New blueprint</strong><span>Level 0 | Rooms 0 | Planned 5</span></p>
+          <p class="pair"><span class="field">New blueprint</span><span class="btn">Rename</span></p>
+          <p class="chips"><span class="btn">New</span><span class="btn">Duplicate</span><span class="btn">Delete</span></p>
+          <p class="chips"><span class="btn">Hide ghosts</span><span class="btn">Pin</span></p>
+          <p class="chips"><span class="btn">Export JSON</span><span class="btn">Copy JSON</span></p>
+          <p class="chips"><span class="btn">-Z</span><span class="btn">+Z</span><span class="btn">Z 0</span><span class="btn">Use my level</span><span class="badge" data-n="3">3</span></p>
+          <p class="line"><strong>Access</strong>&ensp;All: edit - 3 players - 0 factions</p>
+          <p class="chips"><span class="btn wide">Manage access</span></p>
+          <p class="head">Blueprint totals<span class="badge" data-n="4">4</span></p>
+          <p class="line">5 placements / 0 rooms</p>
+          <p class="subhead">Materials &amp; tools</p>
+          {totals.map((row) => (
+            <p class="tot"><span class="tot-icon"><GameGlyph name={row.glyph} size="1em" /></span>{row.label}</p>
+          ))}
+          <p class="subhead">Skills &amp; knowledge</p>
+          <p class="tot">Carpentry x2</p>
+          <p class="tot">Welding x3</p>
+          <p class="chips foot"><span class="btn wide">Build</span><span class="btn wide">Exit planning mode</span></p>
+        </div>
+        <div class="col">
+          <p class="head">Room tools<span class="badge" data-n="5">5</span></p>
+          <p class="pair"><span class="field grow"></span><span class="swatch big"></span></p>
+          <p class="palette">{swatches.map((color) => <span class="swatch" style={`background:${color}`}></span>)}</p>
+          <p class="chips"><span class="btn">Draw room</span><span class="btn">Erase room</span></p>
+          <p class="chips"><span class="btn">Erase tool</span><span class="btn">Build tool</span></p>
+          <p class="chips"><span class="btn">Gather area</span><span class="btn">Build all</span><span class="badge" data-n="6">6</span></p>
+          <p class="chips"><span class="btn">Stop tool</span><span class="btn">Stop queue</span></p>
+          <p class="chips"><span class="btn wide">Move blueprint</span></p>
+          <p class="subhead">Ghost opacity</p>
+          <p class="chips"><span class="btn">8%</span><span class="btn on">14%</span><span class="btn">22%</span><span class="btn">34%</span></p>
+          <p class="subhead">Rooms</p>
+          <p class="listbox empty"></p>
+          <p class="chips"><span class="btn">Update room</span><span class="btn">Delete selected room</span></p>
+          <p class="subhead">Planned buildables<span class="badge" data-n="7">7</span></p>
+          {planned.map((row) => (
+            <p class:list={['plan-row', { active: 'active' in row && row.active }]}><strong>{row.name}</strong><span>{row.at}</span></p>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="world">
+      <span class="badge float" data-n="8">8</span>
+      <svg viewBox="0 0 200 260" aria-hidden="true">
+        <path d="M100 90 160 120 100 150 40 120Z" fill="var(--kbw-gold)" fill-opacity=".08" stroke="var(--kbw-gold)" stroke-opacity=".4" />
+        <path d="M100 90 40 120v-34l60-30Z" fill="none" stroke="#e8e6dd" stroke-opacity=".55" stroke-dasharray="4 3" />
+        <path d="M100 90 160 120v-34l-60-30Z" fill="none" stroke="#e8e6dd" stroke-opacity=".55" stroke-dasharray="4 3" />
+        <path d="M76 116 124 140 100 152 52 128Z" fill="var(--kbw-green)" fill-opacity=".18" stroke="var(--kbw-green)" stroke-opacity=".7" stroke-dasharray="4 3" />
+        <text x="100" y="180" fill="#dcd9ce" fill-opacity=".7" font-size="9" text-anchor="middle" font-family="var(--sl-font-mono)" letter-spacing=".08em">GHOST WALLS</text>
+        <text x="100" y="194" fill="#dcd9ce" fill-opacity=".7" font-size="9" text-anchor="middle" font-family="var(--sl-font-mono)" letter-spacing=".08em">+ GATHER AREA</text>
+      </svg>
+    </div>
+
+    <div class="pmwindow right">
+      <div class="pmtitle">Planning catalogue<span class="badge" data-n="9">9</span></div>
+      <div class="col pad">
+        <p class="field wide">All categories ▾</p>
+        <p class="field wide dim">Search...</p>
+        {catalogRows.map((row) => (
+          <p class:list={['cat-row', { active: 'active' in row && row.active }]}>
+            <span class="cat-icon"><GameGlyph name={row.glyph} size="1.5rem" /></span>
+            <span class="cat-main">
+              <strong>{row.name}</strong>
+              <span class="cat-sub">{row.sub}</span>
+              <span class="ready">■ Ready</span>
+            </span>
+            <span class="cat-pins"><span class="pin">⚲</span><span class:list={['star', { fav: 'fav' in row && row.fav }]}>★</span></span>
+          </p>
+        ))}
+        <p class="head">Selected plan setup<span class="badge" data-n="10">10</span></p>
+        <p class="line strong">Advanced Forge</p>
+        <p class="lbl">Stage</p>
+        <p class="field wide">built ▾</p>
+        <p class="pair lbls"><span class="lbl">Variant</span><span class="lbl">Material set</span></p>
+        <p class="pair"><span class="field grow">Default variant ▾</span><span class="field grow">Default material ▾</span></p>
+        <p class="lbl">Finish</p>
+        <p class="field wide">No finish (bare wall) ▾</p>
+        <p class="chips"><span class="btn cta">Plan selected buildable</span></p>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .kbw-uimock {
+    margin: 1.5rem 0 1rem;
+    container-type: inline-size;
+  }
+
+  .scene {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.42fr) minmax(0, 1fr);
+    border: 1px solid var(--kbw-line);
+    border-radius: 0.45rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 20%, rgb(90 110 60 / 45%), transparent 60%),
+      linear-gradient(160deg, #3d4a2e, #2e3a26 55%, #354430);
+    font-family: var(--sl-font);
+    font-size: 0.68rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  @container (max-width: 46rem) {
+    .scene {
+      grid-template-columns: 1fr;
+    }
+
+    .world {
+      min-height: 10rem;
+    }
+  }
+
+  .pmwindow {
+    background: color-mix(in srgb, #131413 93%, transparent);
+    display: flex;
+    flex-direction: column;
+    margin: 0.6rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.25rem;
+    min-width: 0;
+  }
+
+  .pmtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    font-weight: 650;
+    color: var(--sl-color-white);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    background: color-mix(in srgb, black 35%, transparent);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-width: 0;
+  }
+
+  @container (max-width: 34rem) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .col {
+    padding: 0.55rem 0.65rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-width: 0;
+  }
+
+  .col.pad {
+    padding: 0.6rem 0.7rem;
+  }
+
+  .cols .col + .col {
+    border-inline-start: 1px solid var(--sl-color-gray-5);
+  }
+
+  .col p {
+    margin: 0;
+    position: relative;
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.3rem !important;
+    font-size: 0.62rem;
+    font-weight: 650;
+    color: var(--kbw-gold);
+  }
+
+  .head:first-child {
+    margin-top: 0 !important;
+  }
+
+  .subhead {
+    margin-top: 0.25rem !important;
+    font-size: 0.6rem;
+    font-weight: 650;
+    color: var(--kbw-gold);
+  }
+
+  .bp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, var(--sl-color-white) 7%, transparent);
+    color: var(--sl-color-white);
+  }
+
+  .bp-card span {
+    color: var(--sl-color-gray-3);
+    font-size: 0.6rem;
+  }
+
+  .pair {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .field {
+    padding: 0.22rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, black 45%, transparent);
+    color: var(--sl-color-gray-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .field.grow {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .field.wide {
+    display: block;
+  }
+
+  .field.dim {
+    color: var(--sl-color-gray-3);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  .chips.foot {
+    margin-top: 0.4rem !important;
+  }
+
+  .btn {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, var(--sl-color-white) 6%, transparent);
+    color: var(--sl-color-gray-1);
+    white-space: nowrap;
+  }
+
+  .btn.wide {
+    flex: 1;
+    text-align: center;
+  }
+
+  .btn.on {
+    background: color-mix(in srgb, var(--sl-color-white) 85%, transparent);
+    color: #17191a;
+    font-weight: 600;
+  }
+
+  .btn.cta {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+
+  .line {
+    color: var(--sl-color-gray-2);
+  }
+
+  .line.strong {
+    color: var(--sl-color-white);
+    font-weight: 600;
+  }
+
+  .lbl {
+    font-size: 0.6rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .pair.lbls {
+    gap: 0.35rem;
+  }
+
+  .pair.lbls .lbl {
+    flex: 1;
+  }
+
+  .tot {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--sl-color-gray-1);
+    padding-inline-start: 0.2rem;
+  }
+
+  .tot-icon {
+    display: inline-flex;
+    color: var(--sl-color-gray-2);
+  }
+
+  .palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .swatch {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.15rem;
+    border: 1px solid rgb(0 0 0 / 40%);
+    display: inline-block;
+  }
+
+  .swatch.big {
+    width: 1.5rem;
+    height: 1.4rem;
+    background: #4f7bd9;
+  }
+
+  .listbox {
+    min-height: 2.4rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, black 45%, transparent);
+  }
+
+  .plan-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    padding: 0.3rem 0.45rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.2rem;
+    color: var(--sl-color-white);
+  }
+
+  .plan-row span {
+    color: var(--sl-color-gray-3);
+    font-size: 0.6rem;
+    font-family: var(--sl-font-mono);
+  }
+
+  .plan-row.active {
+    background: color-mix(in srgb, var(--sl-color-white) 9%, transparent);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .world {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+  }
+
+  .world svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .cat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.45rem;
+    border: 1px solid color-mix(in srgb, var(--kbw-green) 45%, transparent);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, black 40%, transparent);
+  }
+
+  .cat-row.active {
+    border-color: var(--kbw-green);
+    background: color-mix(in srgb, var(--kbw-green) 9%, transparent);
+  }
+
+  .cat-icon {
+    display: inline-flex;
+    color: var(--sl-color-gray-1);
+    flex-shrink: 0;
+  }
+
+  .cat-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    min-width: 0;
+  }
+
+  .cat-main strong {
+    color: var(--sl-color-white);
+  }
+
+  .cat-sub {
+    color: var(--sl-color-gray-3);
+    font-size: 0.58rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ready {
+    font-size: 0.58rem;
+    color: var(--kbw-green);
+  }
+
+  .cat-pins {
+    margin-inline-start: auto;
+    display: flex;
+    gap: 0.25rem;
+    color: var(--sl-color-gray-3);
+    flex-shrink: 0;
+  }
+
+  .star.fav {
+    color: var(--kbw-gold);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: var(--kbw-gold);
+    color: #17191a;
+    font-size: 0.62rem;
+    font-weight: 700;
+    font-family: var(--sl-font-mono);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 45%);
+  }
+
+  .badge.float {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    z-index: 1;
+  }
+</style>

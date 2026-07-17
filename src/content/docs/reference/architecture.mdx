@@ -1,0 +1,81 @@
+---
+title: Architecture
+description: Map the Knox Buildworks Build 42 codebase from definitions to UI, planning, validation and server synchronization.
+---
+
+import SystemMap from '../../../components/SystemMap.astro';
+
+## Source map
+
+~~~text
+Contents/mods/KnoxBuildworks/42/media/
+├── KnoxBuildworks/
+│   ├── manifest.json
+│   ├── buildables.schema.json
+│   └── definitions/
+├── lua/shared/KnoxBuildworks/
+│   ├── Core.lua
+│   ├── Definitions/
+│   ├── Geometry/
+│   ├── Network/
+│   ├── Planning/
+│   ├── TimedActions/
+│   ├── Util/
+│   └── Validation/
+├── lua/client/KnoxBuildworks/
+│   ├── UI/
+│   ├── Planning/
+│   └── Client.lua
+└── lua/server/KnoxBuildworks/
+    ├── BuildingObjects/
+    └── Server.lua
+~~~
+
+## Runtime flow
+
+<SystemMap />
+
+## Key modules
+
+| Area | Modules | Responsibility |
+| --- | --- | --- |
+| Core | Core, Log | Namespace, schema constants, sandbox access, logging. |
+| Definitions | Loader, Schema, Registry, Resolver, Groups, Overrides, Properties, EntityCompat | Discover/validate JSON, resolve selections and registered entity references, avoid ID conflicts, support handlers. |
+| Geometry | Matrix | Normalize sprites/geometry into directional cells and bounds. |
+| Requirements | Requirements, Placement | Input/tag/skill/knowledge checks and world placement constraints. |
+| Finishes | WallFinishes, FinishActions, KBWFinishAction | Map/validate/apply plaster, paint and wallpaper. |
+| Building | KBWBuildingObject | Cursor state, timed action, final parts, health, light, stack and callbacks. |
+| Planning | Blueprints, BlueprintFiles plus client Planning modules | Shared blueprint records, per-blueprint JSON persistence, ghosts, rooms, gathers, cursors and queues. |
+| UI | Catalog, BuildCardGrid, RequirementPanel, IngredientDrawer, PinnedRecipes, PlanningMode | Player interaction and presentation. |
+| Network | Integrity, Client, Server | Integrity handshake, blueprint delta commands and access-filtered synchronization. |
+
+## Data sources
+
+The registry reads raw JSON through the Project Zomboid mod file reader. It
+stores each file's content hash and calculates a sorted composite registry identity.
+Definitions are never keyed by sprite; a sprite may be reused by multiple
+buildables inside Knox.
+
+An `entityCompat` value is normalized as a `module.entity` reference. The
+shared EntityCompat resolver asks `ScriptManager` for that `GameEntityScript`
+and caches a runtime-only view of its `SpriteConfig`, `CraftRecipe` and
+`WallCoveringConfig` metadata. During normalization it hydrates omitted
+geometry, sprites, health, inputs, tags, flags, skills and knowledge directly
+from those native components. Explicit JSON values are optional Knox overrides.
+The JSON registry never stores duplicated native component blocks. Final construction gives the same script to
+`GameEntityFactory`, which instances all of its declared components.
+
+The resolver is the single source for a base buildable plus selected variant,
+material option and stage. Catalogue preview, planned ghost, build queue and
+server construction all resolve through it so they cannot intentionally drift.
+
+## Object persistence
+
+Knox-created parts receive KBW modData including buildable ID, stage ID,
+variant ID, material ID, compatibility entity name and schema version. Blueprint
+plans store the same selection data independently until the final object exists.
+
+Blueprints themselves persist as one JSON file each under
+Zomboid/Lua/KnoxBuildworks/blueprints/(save)/ on the authoritative side, written
+by a per-tick batched flusher. Multiplayer clients never touch these files; they
+hold an access-filtered cache synchronized by the server.

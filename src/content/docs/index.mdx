@@ -1,0 +1,140 @@
+---
+title: Knox Buildworks
+description: Project Zomboid Build 42 construction, planning, blueprints, and add-on framework documentation.
+template: splash
+tableOfContents: false
+---
+
+import HomeHero from '../../components/HomeHero.astro';
+import FlowStrip from '../../components/FlowStrip.astro';
+import KbwGrid from '../../components/KbwGrid.astro';
+import PathCard from '../../components/PathCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+<HomeHero
+  kicker="Project Zomboid / Build 42"
+  title="Plan first. Build better."
+  tagline="A complete construction catalogue and blueprint workspace for Build 42-with readable requirements, true multi-tile previews, persistent ghost plans, wall finishes, and multiplayer validation."
+  actions={[
+    { text: 'Player guide', href: './guides/getting-started/', variant: 'primary' },
+    { text: 'Create an add-on', href: './modders/quickstart/', variant: 'secondary' }
+  ]}
+  meta={[
+    'Independent catalogue',
+    'Persistent blueprints',
+    'JSON add-on framework'
+  ]}
+/>
+
+<FlowStrip />
+
+## Start where you are
+
+<KbwGrid min="17rem">
+  <PathCard
+    title="Players"
+    icon="hammer"
+    href="./guides/getting-started/"
+    cta="Start building"
+    links={[
+      { text: 'Interface tour', href: './guides/interface-tour/' },
+      { text: 'Using the catalogue', href: './guides/catalogue/' },
+      { text: 'Building and wall finishes', href: './guides/building-and-finishes/' },
+      { text: 'Planning Mode', href: './guides/planning-mode/' },
+      { text: 'Blueprints, sharing and access', href: './guides/blueprints-and-access/' }
+    ]}
+  >
+    Install the mod, open the catalogue, inspect real requirements, and take a
+    design from ghost preview to finished construction.
+  </PathCard>
+  <PathCard
+    title="Server owners"
+    icon="server"
+    href="./guides/server-configuration/"
+    cta="Configure a server"
+    links={[
+      { text: 'Sandbox and HUD options', href: './guides/server-configuration/' },
+      { text: 'Validation and integrity', href: './reference/validation-and-integrity/' },
+      { text: 'Troubleshooting', href: './reference/troubleshooting/' }
+    ]}
+  >
+    Configure sandbox options, understand the definition integrity handshake, and
+    rely on server-authoritative validation instead of client trust.
+  </PathCard>
+  <PathCard
+    title="Add-on authors"
+    icon="braces"
+    href="./modders/quickstart/"
+    cta="Write definitions"
+    links={[
+      { text: 'Add-on Studio', href: './studio/overview/' },
+      { text: 'Add-on quickstart', href: './modders/quickstart/' },
+      { text: 'Tutorial: creating buildables', href: './modders/creating-buildables/' },
+      { text: 'JSON definition format', href: './modders/definitions/' },
+      { text: 'Translations and packaging', href: './modders/translations-and-packaging/' },
+      { text: 'JSON schema reference', href: './reference/json-schema/' },
+      { text: 'Testing and release', href: './modders/testing-and-release/' }
+    ]}
+  >
+    Ship new buildables through manifests and JSON definitions-geometry,
+    groups, variants, finishes, and focused Lua extension hooks.
+  </PathCard>
+</KbwGrid>
+
+## One system, from recipe to finished build
+
+<KbwGrid min="16rem" bento>
+  <PathCard title="Catalogue & construction" icon="catalogue" wide>
+    Search buildables, inspect real requirements, select material alternatives,
+    rotate a footprint preview, and build through a dedicated timed-action cursor.
+  </PathCard>
+  <PathCard title="Planning Mode" icon="compass">
+    Design rooms and floors before construction, place non-blocking ghosts,
+    set a gather area, and turn a plan into a practical build queue.
+  </PathCard>
+  <PathCard title="Multiplayer integrity" icon="shield">
+    Integrity-checked definitions, server-authoritative validation, and
+    per-blueprint view, build, and contribute permission controls.
+  </PathCard>
+  <PathCard title="Data-driven add-ons" icon="layers" wide>
+    Add content through manifests and JSON definitions with templates, tags,
+    multi-tile geometry, groups, variants, finishes, and focused Lua hooks.
+  </PathCard>
+  <PathCard
+    title="Add-on Studio"
+    icon="braces"
+    href="./studio/overview/"
+    cta="Open the Studio guide"
+  >
+    Author definitions visually, index local sprites and game data, inspect
+    entity references, validate combinations, and export a complete add-on ZIP.
+  </PathCard>
+</KbwGrid>
+
+## What Knox owns
+
+| Area | Knox Buildworks responsibility |
+| --- | --- |
+| Content | JSON definition registry, templates, groups, variants, materials and stage resolution |
+| UI | Catalogue, ingredient drawer, requirement panels, pinned recipes and Planning Mode |
+| Placement | Ghost preview, geometry matrix, support, collision and frame validation, timed construction |
+| Planning | Rooms, gather areas, exported blueprints, build queues and stacked-plan selection |
+| Multiplayer | Definition integrity, server-side validation, blueprint synchronization and access |
+
+:::tip[Build 42 first]
+All terminology and API behaviour in this site is tied to the current Build 42
+mod source. If a generated vanilla entity component is not documented as
+supported, treat it as metadata rather than assuming that copying it to JSON
+will activate it.
+:::
+
+<CtaBand
+  title="Ready to plan your next base?"
+  actions={[
+    { text: 'Get started', href: './guides/getting-started/', variant: 'primary' },
+    { text: 'Add-on Studio', href: './studio/overview/', variant: 'secondary' }
+  ]}
+>
+  Follow the player guide from your first catalogue search to a shared
+  blueprint, or trace how the whole framework fits together.
+</CtaBand>

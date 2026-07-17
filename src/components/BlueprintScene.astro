@@ -1,0 +1,290 @@
+---
+---
+
+<svg
+  class="kbw-scene"
+  viewBox="0 0 640 470"
+  role="img"
+  aria-labelledby="kbw-scene-title kbw-scene-desc"
+>
+  <title id="kbw-scene-title">Knox Buildworks isometric build site</title>
+  <desc id="kbw-scene-desc">
+    An isometric room under construction. A completed back corner with a door
+    and window stands over a tiled floor, translucent ghost walls indicate the
+    remaining enclosure, an upper-level plan floats above it, and a separate
+    exterior gather area holds construction supplies.
+  </desc>
+
+  <g class="corner-marks">
+    <path d="M16 24v-8h8M624 16h-8m8 0v8M16 446v8h8M624 454v-8m0 8h-8" />
+  </g>
+
+  <g class="upper-plan">
+    <path class="drop" d="M300 83v58M470 168v58M330 236v57M160 151v57" />
+    <path class="plate" d="M300 83L470 168L330 236L160 151Z" />
+    <path class="grid" d="M334 100L194 170M368 117L228 187M402 134L262 204M436 151L296 221M266 100L436 185M232 117L402 202M198 134L368 219" />
+    <path class="room-line" d="M300 83L300 151L402 202" />
+  </g>
+  <text x="482" y="165" class="label plan-label">LEVEL +1</text>
+
+  <g class="site-floor">
+    <path class="plate" d="M300 230L490 325L334 403L144 308Z" />
+    <path
+      class="grid"
+      d="M338 249L182 327M376 268L220 346M414 287L258 365M452 306L296 384M262 249L452 344M224 268L414 363M186 287L376 382"
+    />
+  </g>
+
+  <g class="built-wall west">
+    <path class="face" d="M300 230L186 287L186 184L300 127Z" />
+    <path class="studs" d="M272 244L272 141M244 258L244 155M216 272L216 169" />
+    <path class="window" d="M259 224L231 238L231 202L259 188Z" />
+    <path class="window-cross" d="M245 195V231M234 220L256 209" />
+  </g>
+  <g class="built-wall east">
+    <path class="face" d="M300 230L442 301L442 198L300 127Z" />
+    <path class="studs" d="M329 244L329 142M414 286L414 184" />
+    <path class="door" d="M349 254L384 271L384 197L349 180Z" />
+    <path class="door-detail" d="M377 231l-5 3" />
+    <path class="window" d="M423 275L435 281L435 247L423 241Z" />
+  </g>
+
+  <g class="bench">
+    <path class="top" d="M286 264L325 284L294 299L255 279Z" />
+    <path class="front" d="M255 279L294 299V319L255 299Z" />
+    <path class="side" d="M325 284L294 299V319L325 304Z" />
+    <path class="leg" d="M264 303v17M314 308v17" />
+  </g>
+
+  <g class="ghost-walls">
+    <path class="face" d="M186 287L334 361L334 258L186 184Z" />
+    <path class="face" d="M442 301L334 361L334 258L442 198Z" />
+    <path class="studs" d="M223 306L223 203M260 324L260 221M297 343L297 240M406 321L406 218M370 341L370 238" />
+  </g>
+  <text x="407" y="375" class="label ghost-label">GHOST WALLS</text>
+
+  <g class="gather-area">
+    <path class="zone" d="M118 337L220 388L164 416L62 365Z" />
+    <path class="hatch" d="M104 344L192 388M87 353L175 397M70 361L158 405" />
+    <path class="link" d="M220 388L251 372" />
+    <path class="arrow" d="m244 370 8 2-5 6" />
+  </g>
+  <g class="supply-crates">
+    <path class="top" d="M130 336L153 347.5L130 359L107 347.5Z" />
+    <path class="front" d="M107 347.5L130 359V378L107 366.5Z" />
+    <path class="side" d="M153 347.5L130 359V378L153 366.5Z" />
+    <path class="top" d="M156 349L179 360.5L156 372L133 360.5Z" />
+    <path class="front" d="M133 360.5L156 372V391L133 379.5Z" />
+    <path class="side" d="M179 360.5L156 372V391L179 379.5Z" />
+  </g>
+  <text x="109" y="423" class="label gather-label">GATHER AREA</text>
+
+  <g class="dimension">
+    <path d="M150 318L340 413" />
+    <path d="M153 312L147 324M343 407L337 419" />
+  </g>
+  <text x="238" y="402" class="label dimension-label">BUILD FOOTPRINT</text>
+</svg>
+
+<style>
+  .kbw-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .label {
+    fill: var(--sl-color-gray-3);
+    font-family: var(--sl-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-anchor: middle;
+  }
+
+  .corner-marks path {
+    fill: none;
+    stroke: var(--sl-color-gray-4);
+    stroke-width: 1;
+  }
+
+  .upper-plan .plate {
+    fill: var(--kbw-blue);
+    fill-opacity: 0.045;
+    stroke: var(--kbw-blue);
+    stroke-opacity: 0.65;
+    stroke-dasharray: 7 6;
+    stroke-linejoin: round;
+    stroke-width: 1.4;
+  }
+
+  .upper-plan .grid,
+  .upper-plan .room-line {
+    fill: none;
+    stroke: var(--kbw-blue);
+    stroke-opacity: 0.28;
+    stroke-dasharray: 4 5;
+    stroke-width: 1;
+  }
+
+  .upper-plan .drop {
+    fill: none;
+    stroke: var(--kbw-blue);
+    stroke-opacity: 0.24;
+    stroke-dasharray: 2 6;
+    stroke-width: 1;
+  }
+
+  .label.plan-label {
+    fill: var(--kbw-blue);
+    text-anchor: start;
+  }
+
+  .site-floor .plate {
+    fill: var(--kbw-gold);
+    fill-opacity: 0.055;
+    stroke: var(--kbw-gold);
+    stroke-opacity: 0.58;
+    stroke-linejoin: round;
+    stroke-width: 1.45;
+  }
+
+  .site-floor .grid {
+    fill: none;
+    stroke: var(--kbw-gold);
+    stroke-opacity: 0.14;
+    stroke-width: 1;
+  }
+
+  .built-wall .face {
+    stroke: var(--kbw-gold);
+    stroke-linejoin: round;
+    stroke-width: 1.45;
+  }
+
+  .built-wall.west .face {
+    fill: color-mix(in srgb, var(--kbw-gold) 12%, var(--kbw-surface));
+  }
+
+  .built-wall.east .face {
+    fill: color-mix(in srgb, var(--kbw-gold) 23%, var(--kbw-surface));
+  }
+
+  .built-wall .studs,
+  .built-wall .window-cross,
+  .built-wall .door-detail {
+    fill: none;
+    stroke: var(--kbw-gold);
+    stroke-linecap: round;
+    stroke-opacity: 0.48;
+    stroke-width: 1;
+  }
+
+  .built-wall .window {
+    fill: var(--sl-color-black);
+    fill-opacity: 0.48;
+    stroke: var(--kbw-gold);
+    stroke-opacity: 0.78;
+    stroke-width: 1.05;
+  }
+
+  .built-wall .door {
+    fill: var(--sl-color-black);
+    fill-opacity: 0.36;
+    stroke: var(--kbw-gold);
+    stroke-opacity: 0.7;
+    stroke-width: 1.05;
+  }
+
+  .bench path,
+  .supply-crates path {
+    stroke: var(--kbw-gold);
+    stroke-linejoin: round;
+    stroke-opacity: 0.72;
+    stroke-width: 1;
+  }
+
+  .bench .top,
+  .supply-crates .top {
+    fill: color-mix(in srgb, var(--kbw-gold) 36%, var(--kbw-surface));
+  }
+
+  .bench .front,
+  .supply-crates .front {
+    fill: color-mix(in srgb, var(--kbw-gold) 16%, var(--kbw-surface));
+  }
+
+  .bench .side,
+  .supply-crates .side {
+    fill: color-mix(in srgb, var(--kbw-gold) 24%, var(--kbw-surface));
+  }
+
+  .bench .leg {
+    fill: none;
+    stroke: var(--kbw-gold);
+    stroke-linecap: round;
+    stroke-opacity: 0.72;
+    stroke-width: 1.1;
+  }
+
+  .ghost-walls .face {
+    fill: var(--sl-color-gray-1);
+    fill-opacity: 0.04;
+    stroke: var(--sl-color-gray-2);
+    stroke-dasharray: 7 5;
+    stroke-linejoin: round;
+    stroke-opacity: 0.55;
+    stroke-width: 1.35;
+  }
+
+  .ghost-walls .studs {
+    fill: none;
+    stroke: var(--sl-color-gray-2);
+    stroke-dasharray: 4 4;
+    stroke-opacity: 0.27;
+    stroke-width: 1;
+  }
+
+  .label.ghost-label {
+    fill: var(--sl-color-gray-3);
+  }
+
+  .gather-area .zone {
+    fill: var(--kbw-green);
+    fill-opacity: 0.1;
+    stroke: var(--kbw-green);
+    stroke-dasharray: 5 4;
+    stroke-opacity: 0.82;
+    stroke-width: 1.35;
+  }
+
+  .gather-area .hatch {
+    fill: none;
+    stroke: var(--kbw-green);
+    stroke-opacity: 0.28;
+    stroke-width: 1;
+  }
+
+  .gather-area .link,
+  .gather-area .arrow {
+    fill: none;
+    stroke: var(--kbw-green);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-opacity: 0.68;
+    stroke-width: 1.3;
+  }
+
+  .label.gather-label {
+    fill: var(--kbw-green);
+  }
+
+  .dimension path {
+    fill: none;
+    stroke: var(--sl-color-gray-4);
+    stroke-width: 1;
+  }
+
+  .label.dimension-label {
+    font-size: 9px;
+  }
+</style>
