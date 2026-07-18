@@ -61,6 +61,48 @@ It marks a cursor as a container and applies capacity to non-floor thumpable
 parts. Player-built containers are marked explored so they do not generate
 world loot.
 
+## JSON build callbacks
+
+A JSON-only stage may name shared Lua functions in `callbacks`. Knox resolves
+the function by its namespaced path; it never executes Lua stored inside JSON.
+
+| Hook | Runtime | Important payload |
+| --- | --- | --- |
+| `onIsValid` | Client preview and authoritative placement validation, once per footprint cell | `square`, `tileInfo`, `north`, `facing`, `character`, `definition`, `stage`, `placement`, `buildObject`, `tile`, `tileIndex`, `spriteName`, `x`, `y`, `z` |
+| `onCreate` | Authoritative construction, after each world part is created | `thumpable`, `square`, `character`, `facing`, `north`, `definition`, `stage`, `buildObject`, `tile`, `tileIndex`, `x`, `y`, `z`; `craftRecipeData` exists only for an entity-backed native recipe |
+| `timedActionOnIsValid` | Timed-action recheck | Vanilla's `square` and `facing` payload |
+| `onAddToMenu` | Client catalogue filtering | `player`, `recipe`, `definition`, `stage`, `shouldShowAll` |
+
+Do not retain the payload or `buildObject` after the callback returns. Treat
+client callback results as preview feedback only; the server repeats placement
+and requirement validation before construction.
+
+JSON floors automatically receive Knox-owned `onIsValid` and `onCreate`
+lifecycle handlers. Ordinary walls and window frames need no callback. Door
+frame stair-connection safety is inferred from the selected sprite's tile type.
+Plasterability belongs in `finishes`, `surface`, `canBePlastered`, or the
+`plasterable` tag rather than an `onCreate` callback. An explicit stage callback
+overrides the corresponding entity or automatic callback.
+
+### Callback compatibility policies
+
+An add-on that exposes a callback requiring native Java recipe data must declare
+that boundary from a shared Lua file loaded before definitions are normalized:
+
+~~~lua
+local LuaCallback = require("KnoxBuildworks/Util/LuaCallback")
+
+LuaCallback.registerPolicy("MyAddon.Build.OnCreate", {
+    requiresNativeRecipe = true
+})
+~~~
+
+Knox then rejects that callback on a JSON-only stage instead of allowing a late
+runtime error. A policy does not load or register the callback function itself;
+the named global Lua function must still exist. Use this restriction only when
+the implementation actually consumes native `CraftRecipeData`. Ordinary JSON
+inputs use Knox's own recorded-recipe data and should not claim native support.
+
 ## Shared module map
 
 | Module | Key functions | Use |

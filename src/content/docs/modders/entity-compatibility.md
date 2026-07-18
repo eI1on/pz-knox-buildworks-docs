@@ -204,7 +204,14 @@ See [JSON-only buildables](../json-only-buildables/) for the full field list,
 complete example and the precise boundary between Knox-owned construction data
 and native engine components.
 
-## Native callbacks
+## Entity-hydrated callbacks
+
+Callbacks are not themselves native components. JSON-only stages can declare
+the same named Lua paths explicitly under `stage.callbacks`; no entity script
+is required merely to call `OnIsValid` or `OnCreate`. Entity-backed stages
+instead inherit these names from `SpriteConfig` unless JSON deliberately
+overrides them. See the JSON-only floor lifecycle under
+[JSON-only buildables](../json-only-buildables/#reusing-vanilla-construction-callbacks).
 
 `SpriteConfig.OnIsValid` is resolved from the entity script and receives the
 same Knox compatibility payload used by the placement validator:
@@ -236,6 +243,14 @@ referenced entity's real `CraftRecipe` through Build 42 `BuildLogic`. Native
 selection, consumption, recipe callbacks, destroy/used-item processing and the
 real Java `CraftRecipeData` are therefore available to `SpriteConfig.OnCreate`,
 including callbacks such as the vanilla barricade handler.
+
+That distinction is mandatory for `BuildRecipeCode.barricade.OnCreate`. It
+calls a Java method whose parameter type is the native `CraftRecipeData` class.
+If `requirements.inputs` overrides the entity recipe, Knox supplies its Lua
+compatibility object instead and rejects construction before consumption.
+Other specialized `BuildRecipeCode` callbacks may still depend on exact
+sprites, object types, global definitions, or world systems; an available
+callback name is not automatically portable.
 
 If a stage intentionally overrides `requirements.inputs`, Knox uses its custom
 input rules and supplies the Lua compatibility recipe-data object documented

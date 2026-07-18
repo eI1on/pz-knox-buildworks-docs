@@ -290,7 +290,20 @@ one value.
     north = boolean,
     canBuildOverWater = false,
     testCollisions = true,
-    facing = "w" | "n" | "e" | "s"
+    facing = "w" | "n" | "e" | "s",
+    character = player,
+    definition = resolvedBuildable,
+    stage = resolvedStage,
+    placement = effectivePlacement,
+    buildObject = cursor,
+    buildableId = "myaddon.buildable",
+    stageId = "built",
+    tile = normalizedFootprintCell,
+    tileIndex = 1,
+    spriteName = "my_tiles_01_0",
+    x = 100,
+    y = 200,
+    z = 0
 }
 ~~~
 
@@ -302,9 +315,99 @@ It may return false to reject placement and may set `canBuildOverWater` or
     thumpable = builtPart,
     craftRecipeData = recipeData,
     character = player,
-    facing = "w" | "n" | "e" | "s"
+    facing = "w" | "n" | "e" | "s",
+    north = boolean,
+    square = targetSquare,
+    definition = resolvedBuildable,
+    stage = resolvedStage,
+    buildObject = constructionObject,
+    buildableId = "myaddon.buildable",
+    stageId = "built",
+    tile = normalizedFootprintCell,
+    tileIndex = 1,
+    x = 100,
+    y = 200,
+    z = 0
 }
 ~~~
+
+The extra Knox fields are additive: audited vanilla Lua callbacks can ignore
+them, while add-on callbacks can use the resolved data and exact footprint cell.
+Do not retain the payload or `buildObject` after the callback returns.
+`timedActionOnIsValid` keeps the vanilla timed-action payload of `square` and
+`facing`.
+
+### Reusing vanilla construction callbacks
+
+Named Lua callbacks do not require an entity script or a native component, but
+standard JSON-only buildables should not repeat vanilla lifecycle boilerplate.
+A floor receives Knox's JSON-safe floor lifecycle automatically from its
+placement kind:
+
+~~~json
+{
+  "id": "built",
+  "placement": {
+    "kind": "floor"
+  }
+}
+~~~
+
+Internally, Knox supplies `KnoxBuildworks.JsonCallbacks.Floor.OnIsValid` and
+`KnoxBuildworks.JsonCallbacks.Floor.OnCreate` when a JSON-only floor leaves the
+corresponding explicit callback unset. These stable Knox-owned handlers are
+based on the audited Build 42 behavior but accept the JSON construction
+contract directly.
+
+Floor validation runs for each occupied footprint square during preview and
+authoritative validation. It rejects stairs below, farming plots, an identical
+existing floor, and unsupported squares, then disables generic collision
+checks for the floor tile.
+
+`OnCreate` runs after each floor object has been added and before Knox sends
+the completed object. The Knox handler removes replaceable floor and
+vegetation objects, preserves and reorders rugs, recalculates square
+properties, disables erosion for the square, and invalidates rendering and
+lighting. The historical payload field remains named `thumpable` even when the
+created floor is an `IsoObject`.
+
+An explicit `onIsValid` or `onCreate` overrides only that corresponding default.
+A decorative overlay or floor with custom replacement rules may therefore use
+its own namespaced callback without reimplementing the other half of the floor
+lifecycle. Custom callback functions needed by placement and server
+construction must be available from shared Lua. Invalid or unresolved
+callbacks reject the build before requirements are consumed.
+
+Being resolvable is not the same as being reusable. Knox classifies the current
+Build 42 `BuildRecipeCode` callbacks as follows:
+
+| Classification | Callbacks | JSON-only rule |
+| --- | --- | --- |
+| Knox-owned JSON lifecycle | `KnoxBuildworks.JsonCallbacks.Floor.*`, `DoorFrame.OnIsValid`, `Surface.EnablePlaster` | Stable handlers designed for Knox JSON payloads. Floors receive their pair automatically; ordinary door-frame safety and plasterability are inferred without requiring callback fields. |
+| Portable for the matching object kind | Vanilla `floor.OnIsValid`, `floor.OnCreate`, `doorFrame.OnIsValid`, `canBePlastered.OnCreate` | Direct reuse remains possible, but the stage must be a compatible floor, wall, or frame. Prefer Knox automatic behavior for new JSON definitions. |
+| Conditional | both `stairs` callbacks; `campfire` callbacks; barricade validators; `butcheringHook`, `chickenHutch`, `feedingTrough`, `composter`, `windowGlass`, `woodLampPillar`, and `barrelOven` creation callbacks | These assume exact sprite types, orientation, geometry, global definitions, world systems, or specialized Java object replacement. Use only after auditing that callback and testing the exact buildable in-game. |
+| Native recipe required | `barricade.OnCreate` | This calls `BarricadeAble.addBarricadesFromCraftRecipe`, whose Java signature requires the real `CraftRecipeData` class. A JSON-only recipe-data adapter cannot satisfy it. Keep the native entity recipe and do not override its inputs. |
+
+Custom callbacks have no automatic portability guarantee. Their implementation
+must accept the documented Knox payload and must not pass the JSON recipe-data
+adapter to Java APIs typed specifically as `CraftRecipeData`. Knox rejects the
+known incompatible barricade creation callback before consuming requirements.
+
+### Do structural buildables need explicit callbacks?
+
+| JSON-only buildable | Explicit callback required? | Standard Knox behavior |
+| --- | --- | --- |
+| Floor | No | `placement.kind = "floor"` supplies per-tile validation and post-create floor cleanup automatically. |
+| Ordinary wall or wall frame | No | Placement, previous-stage replacement, health, collision flags, and construction are handled by normal Knox data. |
+| Door frame | No for normal behavior | Door-frame sprites automatically receive the vanilla-equivalent stair-connection safety check. Add a callback only for additional custom restrictions. |
+| Window frame | No | Build 42's generated window frames have no general `OnIsValid` callback. Normal wall-edge placement is data-driven. |
+| Plasterable wall, door frame, or window frame | No | Declare finish/surface capability or the plasterable tag. Knox sets `canBePlastered` on the completed thumpable. |
+| Specialized world object | Usually | Use a custom shared callback or an entity reference when creation must replace the placeholder with a specialized Java object or register it with a world system. |
+
+This default-first design also applies to future add-ons: placement and surface
+features that can be expressed as ordinary Knox data should not become Lua
+callbacks. Use callbacks for behavior that actually requires procedural world
+inspection or post-creation work.
 
 For JSON-only inputs, `craftRecipeData` is a Lua compatibility object populated
 from the concrete items Knox selected and consumed. It supports the

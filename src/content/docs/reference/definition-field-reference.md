@@ -163,7 +163,14 @@ inline input array or the name of a material group.
 `callbacks` supports `onAddToMenu`, `onCreate`, `onIsValid`, and
 `timedActionOnIsValid`. Values are namespaced Lua function paths, never code
 strings. `onAddToMenu` receives the player's persisted **Show all versions**
-choice as `shouldShowAll`.
+choice as `shouldShowAll`. These hooks are available to JSON-only stages; an
+entity reference is not required. JSON-only floors receive Knox-owned
+`Floor.OnIsValid` and `Floor.OnCreate` defaults automatically when the matching
+explicit field is absent.
+Callback portability is function-specific: some vanilla callbacks require
+specialized sprites or world systems, and `BuildRecipeCode.barricade.OnCreate`
+requires an entity-backed native recipe because it passes the real
+`CraftRecipeData` into Java.
 
 `lightSource` requires `radius >= 1` plus at least one of `item`, `tags`, or
 `debugItem`. It also supports `fuel` and directional `offsets` containing

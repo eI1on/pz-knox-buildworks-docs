@@ -64,6 +64,20 @@ Use JSON only for normal objects, walls, floors, stairs, overlays, stages,
 requirements, placement rules, callbacks, lights, containers, and Knox wall
 finishes.
 
+In a buildable's **Advanced** mode, open **Lua callbacks** to select indexed
+namespaced functions. JSON-only floors automatically use Knox's validated floor
+lifecycle and export no redundant callback fields. **Restore automatic floor
+lifecycle** removes explicit placement/creation overrides. Load game and add-on
+Lua folders under **Sources** for autocomplete and source verification. Studio
+never executes imported Lua, so custom callback behavior still requires an
+in-game test.
+
+For recognized `BuildRecipeCode` functions, Studio shows a **Portable**,
+**Conditional**, or **Native recipe** advisory. Conditional callbacks depend
+on exact vanilla sprite, object, geometry, or world-system assumptions. Native
+recipe callbacks cannot be used with JSON-only inputs. These diagnostics are
+more important than simple source-name autocomplete.
+
 Reference an entity when the finished object requires native `Resources`,
 workbench/craft logic, craft-bench sounds, sprite-overlay progress, fluids,
 context-menu components, or another engine lifecycle. The generated
@@ -131,4 +145,3 @@ save/reload, and multiplayer integrity.
 The Studio's green validation state means “no statically proven error,” not
 “verified in game.” Use the [release checklist](../../modders/testing-and-release/)
 before publishing.
-

@@ -198,7 +198,7 @@ way for an add-on to override another provider's duplicate ID.
 | skillBaseHealth | number | Health per highest required skill level. |
 | bonusHealth | number | Sandbox-scaled bonus construction health. |
 | object | object | Thumpable/prop, `hoppable`, padlock, collision, barricade, break-sound and cursor flags. A legacy top-level stage `hoppable` is also read, but new definitions should use `object.hoppable`. |
-| callbacks | object | Named `onAddToMenu`, `onCreate`, `onIsValid` and `timedActionOnIsValid` Lua callbacks. |
+| callbacks | object | Optional namespaced `onAddToMenu`, `onCreate`, `onIsValid` and `timedActionOnIsValid` overrides. JSON-only floors receive Knox lifecycle defaults automatically; specialized custom or vanilla callbacks can still require exact native recipes, object types, sprites, or world systems. |
 | lightSource | object | Radius, source item/tags, fuel, debug item and directional offsets. |
 | placement | object | Stage-level override of buildable placement fields. |
 | construction | object | Stage-level override of buildable construction fields. |
