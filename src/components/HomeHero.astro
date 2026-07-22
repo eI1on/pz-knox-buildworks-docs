@@ -42,9 +42,8 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
     {
       meta.length > 0 && (
         <ul class="kbw-meta">
-          {meta.map((item, index) => (
+          {meta.map((item) => (
             <li>
-              <span class="kbw-meta-index">0{index + 1}</span>
               <span>{item}</span>
             </li>
           ))}
@@ -74,10 +73,10 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
   .kbw-hero {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(20rem, 0.94fr) minmax(29rem, 1.06fr);
-    gap: clamp(2.25rem, 5vw, 5rem);
+    grid-template-columns: minmax(20rem, 0.9fr) minmax(29rem, 1.1fr);
+    gap: clamp(2rem, 4vw, 4rem);
     align-items: center;
-    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+    padding-block: clamp(2.25rem, 5vw, 4rem) clamp(2rem, 4vw, 3.25rem);
     isolation: isolate;
     overflow: hidden;
     overflow: clip;
@@ -86,9 +85,9 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
   h1 {
     max-width: 12ch;
     margin-top: 1.1rem;
-    font-size: clamp(2.75rem, 4.8vw, 4.4rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
+    font-size: clamp(2.5rem, 4vw, 3.7rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
     color: var(--sl-color-white);
     text-wrap: balance;
   }
@@ -115,7 +114,7 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
     min-height: 2.9rem;
     padding: 0.72rem 1.25rem;
     border: 1px solid transparent;
-    border-radius: 0.75rem;
+    border-radius: 0.4rem;
     font-size: var(--sl-text-sm);
     font-weight: 650;
     text-decoration: none;
@@ -130,14 +129,14 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
   .kbw-button.primary:hover { background: var(--kbw-accent-bright); }
 
   .kbw-button.secondary {
-    border-color: var(--sl-color-gray-5);
+    border-color: var(--kbw-line-soft);
     color: var(--sl-color-white);
     background: color-mix(in srgb, var(--kbw-surface) 82%, transparent);
   }
 
   .kbw-button.secondary:hover {
-    border-color: var(--kbw-gold);
-    color: var(--kbw-gold-bright);
+    border-color: var(--kbw-accent-muted);
+    color: var(--kbw-accent-bright);
   }
 
   .kbw-meta {
@@ -151,14 +150,15 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
   }
 
   .kbw-meta li {
-    display: grid;
-    gap: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     min-width: 0;
     padding: 0 0.85rem;
     border: 0;
     border-right: 1px solid var(--kbw-line-soft);
     background: transparent;
-    font-size: var(--sl-text-xs);
+    font-size: 0.72rem;
     line-height: 1.35;
     color: var(--sl-color-gray-2);
   }
@@ -166,17 +166,10 @@ const { kicker, title, tagline, actions, meta = [] } = Astro.props;
   .kbw-meta li:first-child { padding-left: 0; }
   .kbw-meta li:last-child { border-right: 0; }
 
-  .kbw-meta-index {
-    font-family: var(--sl-font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0;
-    color: var(--kbw-gold-dim);
-  }
-
   .kbw-hero-art-shell {
     position: relative;
-    border: 1px solid color-mix(in srgb, var(--kbw-accent) 32%, var(--sl-color-gray-5));
-    border-radius: 0.5rem;
+    border: 1px solid var(--kbw-line-soft);
+    border-radius: 0.4rem;
     background: var(--kbw-surface);
     box-shadow: none;
     overflow: hidden;

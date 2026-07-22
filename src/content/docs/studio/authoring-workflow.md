@@ -58,6 +58,17 @@ The geometry editor uses the same layer/row/cell model that Knox normalizes.
 Assign sprites from the asset library, mark deliberate gaps or invisible
 blocking cells, set cell kinds, and inspect the result in the isometric preview.
 
+For an overlay, **Advanced → Placement & construction → Wall attachment** maps
+the authoring intent to the runtime fields:
+
+- **No wall required** leaves the overlay free-standing;
+- **Wall face or corner** enables same-square wall support;
+- **Pillar or corner only** also writes `stage.object.isCorner: true` and
+  requires a `WallNW` or `WallSE` host.
+
+Use the last choice for crown moulding pillars, canvas-cover corners, and similar
+pieces. The Studio warns when a corner overlay has no wall-support requirement.
+
 ## 5. Choose JSON-only or entity-backed
 
 Use JSON only for normal objects, walls, floors, stairs, overlays, stages,

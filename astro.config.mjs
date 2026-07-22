@@ -29,6 +29,9 @@ export default defineConfig({
         alt: ''
       },
       customCss: ['./src/styles/custom.css'],
+      components: {
+        SocialIcons: './src/components/CommunityLinks.astro'
+      },
       lastUpdated: true,
       editLink: editLink ? { baseUrl: editLink } : undefined,
       sidebar: [

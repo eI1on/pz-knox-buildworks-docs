@@ -225,6 +225,8 @@ These are Knox-owned equivalents. They do **not** register a native
 | dismantable | Marks the built object as dismantleable. Defaults to true. |
 | blockAllSquare | Overrides full-square placement blocking. |
 | canPassThrough | Overrides walk-through behavior. |
+| isDoorFrame | Marks a decorative wall-shaped sprite as a real passable door frame. Use this when the tile type is `wall` rather than `doorFrN` or `doorFrW`. |
+| isCorner | Persists the native corner flag. For supported wall overlays, it also restricts the host to a `WallNW` or `WallSE` pillar/corner. |
 | hoppable | Overrides the hoppable flag after sprite-property discovery. |
 | canBarricade | Overrides automatic door/window barricade support. |
 | canBePadlocked | Enables padlock support. |
@@ -247,12 +249,43 @@ the corresponding derived flags where supported.
 | kind | `object`, `wall`, `floor`, `stairs`, `overlay` or `wallCovering`. |
 | requiresFloor | Require an existing floor. Floors themselves use adjacency support instead. |
 | maxDistance | Optional Knox-specific maximum placement distance. Omit it to use normal cursor/path behavior. |
-| againstWall / needToBeAgainstWall | Require a supporting wall in the facing direction. |
+| againstWall / needToBeAgainstWall | Require a supporting wall. Wall overlays inspect host objects on the selected square; ordinary against-wall furniture retains its adjacent-square behavior. |
 | dontNeedFrame | Allows a door-like sprite without an existing door frame. |
 | needWindowFrame | Requires an empty window frame on the selected edge. |
 | isPole | Uses vanilla pole/wall support rules. |
 | wallCoveringType | `plaster`, `paint`, `paintThump`, `wallpaper` or `paintSign`. |
 | sign | Sign index/name for a paint-sign covering definition. |
+
+### Wall-face and pillar overlays
+
+A normal wall overlay accepts the selected north or west wall face and also
+corner walls. A trim made specifically for a pillar or corner must additionally
+set `stage.object.isCorner`:
+
+~~~json
+{
+  "placement": {
+    "kind": "overlay",
+    "needToBeAgainstWall": true
+  },
+  "stages": [
+    {
+      "id": "built",
+      "object": {
+        "isCorner": true,
+        "blockAllSquare": false,
+        "canPassThrough": true
+      }
+    }
+  ]
+}
+~~~
+
+This is an explicit behavior flag, not a name convention. Knox does not assume
+that a buildable containing “pillar” or “corner” in its translated name is a
+corner overlay. The host sprite must expose `WallNW` or `WallSE`. Sprite
+properties such as `WallOverlay`, `FasciaEdge`, and `attachedN/W` are useful
+authoring hints, but do not silently replace the definition's placement rules.
 
 ## Construction metadata
 

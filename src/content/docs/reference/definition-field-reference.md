@@ -133,7 +133,7 @@ inline input array or the name of a material group.
 | `kind` | enum | `object`, `wall`, `floor`, `stairs`, `overlay`, or `wallCovering`. |
 | `requiresFloor` | boolean | Requires a floor at the target. |
 | `maxDistance` | number | Positive Knox-specific cap; omit for normal cursor/path behavior. |
-| `againstWall`, `needToBeAgainstWall` | boolean | Require matching wall support. |
+| `againstWall`, `needToBeAgainstWall` | boolean | Require matching wall support. For `overlay`, support is checked on the selected square rather than an adjacent furniture square. |
 | `dontNeedFrame` | boolean | Allows applicable door-like placement without a frame. |
 | `needWindowFrame` | boolean | Requires an empty compatible window frame. |
 | `isPole` | boolean | Uses pole/wall support behavior. |
@@ -157,8 +157,12 @@ inline input array or the name of a material group.
 ## Object, callbacks, and light
 
 `object` supports `isThumpable`, `isProp`, `dismantable`, `blockAllSquare`,
-`canPassThrough`, `hoppable`, `canBarricade`, `canBePadlocked`, `thumpDamage`,
-`breakSound`, `cornerSprite`, `buildLow`, and `drawFloorGrid`.
+`canPassThrough`, `isDoorFrame`, `isCorner`, `hoppable`, `canBarricade`,
+`canBePadlocked`, `thumpDamage`, `breakSound`, `cornerSprite`, `buildLow`, and
+`drawFloorGrid`. On an overlay with `needToBeAgainstWall`, `isCorner: true`
+requires a `WallNW` or `WallSE` pillar/corner host. Without `isCorner`, north,
+west, window, door-frame, hoppable-wall, and corner hosts are accepted according
+to the selected face.
 
 `callbacks` supports `onAddToMenu`, `onCreate`, `onIsValid`, and
 `timedActionOnIsValid`. Values are namespaced Lua function paths, never code
