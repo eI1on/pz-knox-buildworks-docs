@@ -53,40 +53,22 @@ const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.pro
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
     padding: 1.35rem 1.4rem 1.4rem;
-    border: 1px solid var(--kbw-line-soft);
-    border-radius: 0.5rem;
-    background: color-mix(in srgb, var(--kbw-surface) 88%, transparent);
+    border: 0;
+    border-radius: 0.25rem;
+    background: var(--kbw-surface);
     box-shadow: none;
     overflow: hidden;
   }
 
-  .kbw-card::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 2px;
-    background: var(--kbw-accent);
-    opacity: 0;
-  }
-
   .kbw-card.is-link:hover {
-    border-color: var(--kbw-line);
-    background: color-mix(in srgb, var(--kbw-accent) 5%, var(--kbw-surface-raised));
-  }
-
-  .kbw-card.is-link:hover::before {
-    opacity: 0.9;
+    background: var(--kbw-surface-raised);
   }
 
   .kbw-card.wide {
     grid-column: span 2;
-    background:
-      linear-gradient(var(--kbw-grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--kbw-grid-line) 1px, transparent 1px),
-      color-mix(in srgb, var(--kbw-surface) 82%, transparent);
-    background-size: 28px 28px, 28px 28px, auto;
+    background: var(--kbw-surface);
   }
 
   @media (max-width: 56rem) {
@@ -97,19 +79,7 @@ const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.pro
 
   @media (prefers-reduced-motion: no-preference) {
     .kbw-card {
-      transition: border-color 160ms ease, background-color 160ms ease;
-    }
-
-    .kbw-card::before {
-      transition: opacity 150ms ease;
-    }
-
-    .kbw-card-cta :global(svg) {
-      transition: translate 150ms ease;
-    }
-
-    .kbw-card.is-link:hover .kbw-card-cta :global(svg) {
-      translate: 3px 0;
+      transition: background-color 160ms ease;
     }
   }
 
@@ -124,11 +94,10 @@ const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.pro
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 2.6rem;
-    height: 2.6rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--kbw-line);
-    background: color-mix(in srgb, var(--kbw-accent) 10%, transparent);
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: transparent;
     color: var(--kbw-accent-bright);
   }
 
@@ -172,10 +141,7 @@ const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.pro
   }
 
   .kbw-card-links li {
-    padding-inline-start: 0.9rem;
-    background:
-      linear-gradient(var(--kbw-gold-dim), var(--kbw-gold-dim)) no-repeat left
-      0.55em / 0.4rem 1px;
+    padding-inline-start: 0;
   }
 
   .kbw-card-links a {
@@ -183,7 +149,7 @@ const { title, icon, href, cta = 'Open guide', links, wide = false } = Astro.pro
     z-index: 1;
     color: var(--sl-color-gray-1);
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--kbw-gold) 40%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--kbw-gold) 35%, transparent);
     text-underline-offset: 0.2em;
   }
 

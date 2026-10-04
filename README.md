@@ -2,8 +2,8 @@
 
 This repository contains the public documentation site for Knox Buildworks, a
 Project Zomboid Build 42 construction framework. It covers player workflows,
-server configuration, add-on development, the JSON definition model, runtime
-integration, and the companion Add-on Studio.
+server configuration, add-on development, the JSON definition model, and runtime
+integration.
 
 The site is built with [Astro](https://astro.build/) and
 [Starlight](https://starlight.astro.build/) and deploys as a static website.
@@ -51,7 +51,6 @@ domain, set the `SITE` repository variable to the full site URL and set
 ## Related repositories
 
 - `pz-knox-buildworks`: Project Zomboid mod and runtime
-- `pz-knox-buildworks-addon-studio`: local-first visual add-on authoring tool
 
 ## Documentation policy
 

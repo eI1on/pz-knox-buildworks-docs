@@ -1,153 +1,46 @@
 ---
 title: Interface tour
-description: An annotated map of the Knox Buildworks catalogue window and Planning Mode, explaining what every control does.
+description: Find your way around the Buildworks catalogue, inspector, and separate Planning Mode workspace.
 ---
 
-import CatalogMock from '../../../components/CatalogMock.astro';
-import PlanningMock from '../../../components/PlanningMock.astro';
+The catalogue and Planning Mode have different jobs. The catalogue helps you find and build one object. Planning Mode manages a whole blueprint, with its own smaller catalogue beside the world view.
 
-This page walks through both Knox Buildworks screens element by element. The
-figures mirror the real in-game window layouts; only the item icons are
-documentation stand-ins - in game every entry shows its actual item or
-sprite icon, with full tooltips.
+## Open the catalogue
 
-## Opening the interface
+Press **F7** (rebindable in Mod Options) or use the Build button drawer on the game toolbar. If definitions are still loading, an early F7 press is queued and opens the catalogue when loading finishes. The server's **ReplaceBuildMenu** setting decides whether Knox or the vanilla Building Menu is the primary Build button action.
 
-- Press **F7** (rebindable under Mod Options > Knox Buildworks > *Open Knox
-  Buildworks*).
-- Use the Build button drawer on the left-side game toolbar. With the sandbox
-  option **ReplaceBuildMenu** enabled, the Build button opens Knox directly;
-  otherwise vanilla stays primary and Knox lives in the hover drawer.
+## Main catalogue
 
-The world context menu does not open the catalogue. Blueprint items and plain
-paper have inventory context actions for importing, updating, or drafting
-blueprints.
+| Area | What to do there |
+| --- | --- |
+| Search and scope | Search by name, requirements, or everything. Switch between All, Favorites, and Recent. |
+| Browse | Choose a category and then a subcategory. Filter by materials, skills, and readiness; **All qualities** also reveals normally hidden construction levels. |
+| Results | Switch between grid and detailed list. A green readiness cue marks locally buildable entries. Pin or favorite an entry from its card or inspector. Hover over the magnifier to enlarge its tile image. |
+| Inspector | See the selected buildable, its footprint, description, stage and available variants, materials and finishes. **Materials & tools** and **Skills & knowledge** remain together here. |
+| Ingredient details | Select a requirement to see actual matching inventory under **Available Ingredients** and accepted alternatives under **Possible Items**. These details appear beside the inspector. |
+| Actions | **Build** starts placement. **Place Plan** creates a planned ghost. |
 
-## The catalogue window
+The catalogue can be resized. Compact mode keeps browsing light: hover a buildable for its details rather than keeping the full inspector open. Appearance and preview sizes can be changed with the gear button; changes apply while you adjust them.
 
-<CatalogMock />
-
-1. **Title bar** - the main window. It can be moved and resized; scrollable
-   panes keep their own scrollbars and never draw over the header or resize
-   handles.
-2. **Search** - filters the current catalogue content as you type. The mode
-   selector next to it decides whether the text matches *recipe names*,
-   *required items*, or *everything*.
-3. **Sort and view** - switch between natural registry order and alphabetic
-   A-Z; pinned recipes always stay first. The list button swaps between the
-   icon **Grid** and the **Detailed list** (clearer names, categories,
-   status, favorites and pins).
-4. **Scope chips** - *All* shows everything, the star shows your
-   **Favorites**, *Recent* shows entries you selected or built lately.
-   Favorites and recents are stored per player.
-5. **Plans and collapse** - *Plans* opens the blueprint list, and the arrow
-   button collapses the window into a compact layout.
-6. **Category row** - paged category buttons with previous/next arrows.
-   *All categories* is the default scope.
-7. **Filter row** - three dropdowns narrow the content by subcategory
-   (*All types*), material metadata (*All materials*) and required skill
-   (*All skills*).
-8. **Buildable cards** - the current result set with icon, name and a green
-   **■ Ready** marker; the selected card is highlighted. Each card exposes
-   its pin (top-left) and favorite star (top-right) directly.
-9. **Inspector and footprint preview** - the selected buildable's
-   description, build time and conditions (for example *Requires light*),
-   plus a sprite preview tagged with the footprint size (here `3x3x1`
-   tiles). Grouped buildables add a level carousel here, and *Variant*,
-   *Material set* and *Finish* dropdowns appear whenever the buildable has
-   alternatives.
-10. **Readiness status** - green **Ready to build** or **Requirements not
-    met**. In multiplayer this line can also read *"Waiting for server
-    definition validation..."* until the integrity handshake confirms your
-    definitions match the server.
-11. **Requirement sections** - **Skills & knowledge** (skill levels, learned
-    recipes) is listed separately from **Materials & tools**. Each row shows
-    the item icon, your count against the needed amount (`0/1`), and its
-    rules: *consumed*, *kept* (tools) or *drained* by uses, alternatives,
-    the accepted item tag, and degrade chances.
-12. **Actions** - **Build** starts the placement cursor for the exact
-    selection; **Place Plan** plants it as a non-blocking ghost instead.
-13. **Ingredient drawer** - selecting a requirement row opens the
-    *Available Ingredients / Possible Items* browser: the input's rules and
-    recipe use at the top, your real matching inventory stacks under
-    *Available Ingredients*, and every acceptable item and Build 42 item tag
-    under *Possible Items*. Selecting one alternative records your manual
-    choice for that input.
-
-More detail on searching, favorites and manual alternatives lives in
-[Using the catalogue](../catalogue/).
+Read [Using the catalogue](../catalogue/) for matching items, filters, and pins.
+You can also right-click a world tile and use **Find this piece in Knox Buildworks**; an empty opening offers **Find doors/windows for this opening** to narrow compatible choices.
 
 ## Planning Mode
 
-<PlanningMock />
+Planning Mode keeps two windows over the world. The workspace on the **left** manages the blueprint; its dedicated catalogue sits on the **right**. It does not open the large main catalogue inside the workspace.
 
-1. **Knox Planning Mode window** - Planning Mode is its own mode with two
-   floating windows over the world; leave it with *Exit planning mode*. If a
-   server disables the sandbox option **EnablePlanningMode**, the mode
-   reports itself as disabled.
-2. **Blueprints panel** - the selected blueprint with its level, room and
-   placement summary. Rename it via the name field, create (*New*),
-   *Duplicate* or *Delete* blueprints, toggle *Hide ghosts*, *Pin* the totals
-   to the HUD, and *Export* / *Import* / *Copy JSON* to share a design.
-   *Export* writes a .json file to Zomboid/Lua/KnoxBuildworks/exports/ using
-   an ASCII-safe name (knox_blueprint_(name)_(id).json); *Import* lists the
-   .json files in that folder by the blueprint title stored inside each file
-   (drop files there by hand to bring designs in from other players or
-   saves). Imports also come from a drafted blueprint item.
-3. **Z level controls** - *-Z* / *+Z* plan one floor lower or higher, the
-   current level is shown (*Z 0*), and *Use my level* snaps back to your
-   character. The *Access* line summarises the current sharing state
-   (default scope, players, factions); *Manage access* opens the full
-   permission window.
-4. **Blueprint totals** - placements/rooms count plus the combined
-   *Materials & tools* and *Skills & knowledge* the whole blueprint needs.
-   *Build* starts construction from the plan.
-5. **Room tools** - name a room, pick its zone colour from the palette, then
-   *Draw room* drags the rectangle. *Erase room* removes room zones without
-   touching plans; *Update room* and *Delete selected room* manage the
-   Rooms list.
-6. **Cursor and queue tools** - *Erase tool* removes planned buildables one
-   at a time; *Build tool* lets you click individual ghosts to build them;
-   *Gather area* drags the container/vehicle area used for material counting
-   and fetching; *Move blueprint* picks a new origin tile and the whole
-   blueprint follows; *Build all* queues every ready ghost; *Stop tool* /
-   *Stop queue* cancel the active cursor or queue run.
-7. **Planned buildables** - every ghost in the blueprint with its stage and
-   world position. Selecting an entry highlights it; the *Ghost opacity*
-   presets control how strongly ghosts render.
-8. **World view** - ghosts render at the blueprint's selected Z level; rooms
-   and the gather area draw as coloured zones. When several plans stack on
-   one tile, press the rotate key to cycle through them.
-9. **Planning catalogue** - the same registry content as the main window,
-   filtered for planning, with per-row readiness, pin and favorite. Pick
-   what the next ghost placement will be.
-10. **Selected plan setup** - stage, variant, material set and finish that
-    get saved *into the planned ghost*. A planned wall can therefore already
-    carry its future paint or wallpaper. *Plan selected buildable* starts
-    the ghost cursor.
+| Workspace control | Purpose |
+| --- | --- |
+| Plans | Create, select, rename, duplicate, share, import, export, or delete blueprints. Preview the full layout before placing it. |
+| Pieces | Review planned objects, remove a selected pending piece, and choose build or erase tools. |
+| Rooms | Draw, recolor, update, or erase room zones. |
+| Supplies | Set the gather area used to count nearby materials. |
+| Level and ghosts | Plan on another Z level and adjust ghost visibility. |
 
-Deeper coverage: [Planning Mode](../planning-mode/) and
-[Blueprints, sharing and access](../blueprints-and-access/).
+The **planning catalogue** has search, category and subcategory selectors, an All qualities toggle, and buildable results. After selecting one, use its arrows to move through stages, variants, materials, and finishes, then choose **Add to plan**. The selected combination is saved with the planned piece.
 
-## Mod Options
+See [Planning Mode](../planning-mode/) and [Blueprints and access](../blueprints-and-access/) for the full workflow.
 
-All client-side options live under **Mod Options > Knox Buildworks**:
+## Settings
 
-| Option | Values | What it does |
-| --- | --- | --- |
-| Open Knox Buildworks | Keybind (default F7) | Opens/closes the catalogue window. |
-| Debug logging | On / off | Verbose Knox log output for troubleshooting. |
-| Pinned alignment | Auto, Left, Right, Center | Horizontal alignment of the pinned recipe HUD tracker. |
-| Pinned position | Auto, Manual | Manual lets you drag the tracker anywhere; a reset action clears it. |
-| Pinned opacity | 15-100% (default 85) | Background opacity of the tracker. |
-| Pinned accent bar | Left, Right, Top, None | Where the tracker's accent bar is drawn. |
-| Pinned content | Icons, Text | Whether tracked requirements render as text or text plus item/skill icons. |
-
-The same pinned-tracker settings are reachable in game from the tracker's own
-settings popup.
-
-:::tip[Server options live elsewhere]
-Sandbox options such as **ReplaceBuildMenu**, **EnablePlanningMode**, build XP
-and blueprint limits are configured by the host or server owner - see
-[Server configuration](../server-configuration/).
-:::
+The catalogue gear contains local appearance and browsing preferences: panel opacity and tone, contrast, icon and hover-preview size, tile backgrounds, and pinned-tracker layout. F7, toolbar visibility, planning inventory visibility, debug logging, and profiling live in **Mod Options > Knox Buildworks**. Server rules such as planning availability, well water, and paint requirements live in sandbox settings. See [Server configuration](../server-configuration/).

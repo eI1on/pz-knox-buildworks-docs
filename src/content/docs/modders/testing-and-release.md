@@ -16,10 +16,9 @@ Configure your editor with the shipped KBW buildables.schema.json. It catches
 the structural core, but runtime testing is still required because the game
 checks actual item types, sprites, perk names and tags.
 
-The [Add-on Studio](../../studio/overview/) runs structural,
-runtime-equivalent, indexed-game-data, and cross-project checks and can export
-a validation report. Its successful preview still does not replace the game
-tests below.
+Static checks cannot confirm world-object behavior, availability of every
+installed sprite, or multiplayer timing. Run the game tests below after syntax
+and schema validation.
 
 ## Single-player test plan
 

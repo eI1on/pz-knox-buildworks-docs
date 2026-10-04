@@ -203,6 +203,7 @@ way for an add-on to override another provider's duplicate ID.
 | placement | object | Stage-level override of buildable placement fields. |
 | construction | object | Stage-level override of buildable construction fields. |
 | container | object | Built-in container property. |
+| nativeObject | object | Requests a supported engine-owned world-object class. `fireplace` creates `IsoFireplace`; `generator` creates `IsoGenerator` and also requires an item full type. Fireplace sprites carrying B42's `IsoType=IsoFireplace` or `container=fireplace` metadata are detected per geometry cell even when this field is omitted. |
 | xp | object | Perk-to-XP award map. |
 | requirements | object | Inputs, materials, tools, skills and knowledge. |
 | finishes | object | Normal-wall plaster/paint/wallpaper configuration. |

@@ -94,8 +94,8 @@ when Knox derives their rows. This includes native flags such as `ToolLeft`,
 food-state, sealing, equipment, and recording flags. Most of those belong to
 the native `BuildLogic`/`CraftRecipeData` lifecycle and are **not** simulated by
 custom JSON consumption. Do not add a native-only flag to a JSON row and assume
-it activates engine behavior. The Add-on Studio indexes the current enum so
-imported entity recipes can be inspected without a partial hardcoded list.
+it activates engine behavior. Inspect the installed Build 42 scripts when an
+entity recipe uses a flag that is not covered by these JSON rules.
 
 ## Tags
 

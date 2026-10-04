@@ -5,25 +5,32 @@ description: Browse, filter, inspect, favorite, pin, and select the exact inputs
 
 ## Browse and filter
 
-The catalogue has two views:
+The catalogue has grid and detailed-list views:
 
 - **Grid** for quick visual browsing.
 - **Detailed list** for clearer names, categories, status, favorites and pins.
 
 Use the search mode selector to match recipe names, required items, or both.
-Filters narrow the current content by category, subcategory/type, material
-metadata, and required skill. Sorting supports the natural registry order or
-alphabetical order; pinned entries stay easy to find.
+Choose a category, then a subcategory within it. The visible filters narrow
+the results by material, required skill, or local readiness. Sorting supports
+natural registry order or alphabetical order; pinned entries stay easy to find.
 
-**Show all versions** mirrors Build 42's Building Menu tick box. Normally,
+**All qualities** mirrors Build 42's Building Menu tick box. Normally,
 each stage's `OnAddToMenu` callback may hide versions the current character
 should not see, such as lower or higher skill variants. Enabling the option
 passes `shouldShowAll = true` to that callback and exposes those versions in
 both the Buildworks catalogue and Planning catalogue. The choice is saved per
 player.
 
-Favorites are player-local catalogue choices. Recently used entries update after
-selection/building so frequently used construction stays near the front.
+Favorites are player-local catalogue choices. Recently used entries update
+after selection or building. Favorite and pin controls are available on the
+result and in the selected buildable's inspector. The magnifier on a result
+enlarges its sprite only while hovered. Compact mode shows details on hover
+without occupying the full inspector width.
+
+To copy something already in the world, right-click its tile and choose
+**Find this piece in Knox Buildworks**. For an empty frame, **Find doors/windows
+for this opening** lists compatible pieces.
 
 ## Inspector selections
 
@@ -61,7 +68,8 @@ Materials and consumables may count eligible stacks lying on the current build
 square. Kept tools must be carried. Each row indicates whether it is consumed,
 kept, drained by uses, or may degrade.
 
-Skills and learned recipes are displayed separately from materials. A green
+Skills and learned recipes have their own section in the same inspector panel
+as materials and tools. A green
 state means the selection is ready under current local checks; a final
 placement, distance, permission and resource check still happens when building.
 

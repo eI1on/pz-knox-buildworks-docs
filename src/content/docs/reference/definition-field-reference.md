@@ -87,7 +87,7 @@ below.
 | `container` | object | Built-in registered property: `{ type?, capacity? }`. |
 | custom property | any | Runs only when a shared Lua handler registered that exact stage key. |
 
-Unknown fields are preserved by JSON and the Studio, but they have no gameplay
+Unknown fields are preserved by JSON, but they have no gameplay
 behavior unless Knox core or a registered property handler consumes them.
 
 ## Requirement input
@@ -166,7 +166,7 @@ to the selected face.
 
 `callbacks` supports `onAddToMenu`, `onCreate`, `onIsValid`, and
 `timedActionOnIsValid`. Values are namespaced Lua function paths, never code
-strings. `onAddToMenu` receives the player's persisted **Show all versions**
+strings. `onAddToMenu` receives the player's persisted **All qualities**
 choice as `shouldShowAll`. These hooks are available to JSON-only stages; an
 entity reference is not required. JSON-only floors receive Knox-owned
 `Floor.OnIsValid` and `Floor.OnCreate` defaults automatically when the matching

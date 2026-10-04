@@ -21,7 +21,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Knox Buildworks',
-      description: 'Project Zomboid Build 42 building, planning, blueprint, and add-on documentation.',
+      description: 'Project Zomboid Build 42 building, planning, blueprints, and add-on authoring.',
       favicon: '/favicon.svg',
       logo: {
         dark: './src/assets/kbw-logo-dark.svg',
@@ -62,14 +62,6 @@ export default defineConfig({
             'modders/extension-apis',
             'modders/translations-and-packaging',
             'modders/testing-and-release'
-          ]
-        },
-        {
-          label: 'Add-on Studio',
-          items: [
-            'studio/overview',
-            'studio/local-sources',
-            'studio/authoring-workflow'
           ]
         },
         {

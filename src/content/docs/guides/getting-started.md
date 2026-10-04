@@ -31,7 +31,7 @@ blueprint items.
 1. Search or browse a buildable in the catalogue.
 2. Select a grouped level, variant, material set, or finish when those controls
    are available.
-3. Read **Skills & knowledge** and **Materials & tools** separately.
+3. Read **Materials & tools** and **Skills & knowledge** together in the right-hand inspector.
 4. Select a requirement to inspect actual inventory stacks and every allowed
    alternative.
 5. Click **Build** to enter placement mode.
@@ -42,8 +42,9 @@ The build cursor validates the same requirement and placement rules again when
 construction starts. In multiplayer, the server performs the final validation.
 
 :::tip[Simple entries stay compact]
-Variant, material-set and finish selectors disappear if the selected buildable
-does not support alternatives. Grouped entries instead expose a level carousel.
+Variant, material-set and finish controls appear only when the buildable supports
+them. Grouped entries expose a level carousel. In compact mode, hover an entry
+for its details without keeping the full inspector open.
 :::
 
 ## Next steps

@@ -143,8 +143,8 @@ ExampleKBWPack/
 
 Use UTF-8 JSON, two-space indentation, no comments, and a trailing newline.
 Do not ship local absolute paths, game/decompiled source, or vanilla sprite
-sheets. The [Add-on Studio](../../studio/overview/) can generate the manifest,
-translation files, `mod.info`, validation report, and complete add-on ZIP.
+sheets. Keep `mod.info`, the manifest, definitions, and translations in the
+same add-on package so servers and clients load identical data.
 
 ## Before publishing
 

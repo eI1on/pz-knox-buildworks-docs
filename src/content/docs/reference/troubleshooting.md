@@ -47,6 +47,16 @@ Check the cursor/console reason:
   a real world collision;
 - definition integrity mismatch means the multiplayer definition hash is not accepted.
 
+If materials disappear but nothing is built after a game update, confirm that
+both the server and clients have the latest Buildworks release. The Build 42.21
+furniture API change affected wells, roofs, shelves and upper counters; do not
+assume a successful timed action means the object was created. Keep the game
+and mod versions together when reproducing a report.
+
+If F7 appears to do nothing just after loading, wait for definitions to finish
+loading: the catalogue request is queued. Also check the keybind in Mod Options
+and whether the Build button drawer is enabled.
+
 ## Plans or ghosts
 
 For Planning Mode:
@@ -64,3 +74,11 @@ The queue can skip an entry if the world changed, resources are no longer
 available, a predecessor is missing, the target is unreachable, or permission
 was revoked. Inspect totals, gather area coverage and individual build preview
 before retrying.
+
+## Adding or removing the mod from a save
+
+Back up a multiplayer world before changing its mod list. Adding Buildworks to
+an existing save may work, but removing it after the save has registered its
+items can leave missing WorldDictionary entries. Deleting WorldDictionary
+files is not a safe general fix. Test mod-list changes on a copy of the save,
+and retain the mod if the world still references its items.

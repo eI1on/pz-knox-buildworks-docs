@@ -3,13 +3,11 @@ title: Add-on quickstart
 description: Create a Build 42 Knox Buildworks add-on with a manifest, routed translations, and one JSON-only buildable.
 ---
 
-## Choose an authoring route
+## Create an add-on
 
-You can write the files by hand or use the local-first
-[Knox Buildworks Add-on Studio](../../studio/overview/). Both routes generate
-the same manifest, definition bundles, and Project Zomboid translation files.
-The Studio is useful for sprite browsing, geometry, validation, and export; it
-does not replace in-game testing.
+Knox add-ons are ordinary Build 42 mods with a manifest, JSON definitions, and
+translations. You can edit and validate these files with your preferred text
+editor; in-game testing is still necessary.
 
 For a normal data-only add-on you need:
 
@@ -193,5 +191,5 @@ mod. Turn on Knox debug logging, open the catalogue with F7, and verify:
 - materials are consumed, the tool is retained, and its action prop appears;
 - the same files pass a hosted or dedicated-server integrity handshake.
 
-Continue with [JSON definition format](../definitions/), or follow the
-[Studio authoring workflow](../../studio/authoring-workflow/).
+Continue with [JSON definition format](../definitions/) and the
+[testing and release checklist](../testing-and-release/).

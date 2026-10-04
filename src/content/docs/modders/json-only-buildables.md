@@ -221,7 +221,7 @@ These are Knox-owned equivalents. They do **not** register a native
 | Field | Effect |
 | --- | --- |
 | isThumpable | Sets the construction object's thumpable behavior flag. |
-| isProp | Places a moveable-style world prop rather than a normal built thumpable. |
+| isProp | Places a moveable-style world object rather than a normal built thumpable. Use it for decorative pass-through objects. Knox applies this path automatically to non-floor sprites carrying B42 roof metadata. |
 | dismantable | Marks the built object as dismantleable. Defaults to true. |
 | blockAllSquare | Overrides full-square placement blocking. |
 | canPassThrough | Overrides walk-through behavior. |
@@ -237,8 +237,67 @@ These are Knox-owned equivalents. They do **not** register a native
 | drawFloorGrid | Enables or disables the floor placement grid. |
 
 Sprite properties still supply automatic collision, door, window, floor,
-stairs, stackability and barricade discovery. Explicit object fields override
-the corresponding derived flags where supported.
+stairs, roof, stackability and barricade discovery. Explicit object fields
+override the corresponding derived flags where supported.
+
+`canPassThrough` and `blockAllSquare` configure an `IsoThumpable`, but they do
+not turn it into a neutral tile object. B42's `IsoThumpable` pathfinding remains
+oriented to a north or west edge. Decorative pieces that must not create an
+edge should use `isProp: true`. Knox detects pitched roofs, roof accents and
+eaves through `RoofGroup`, `WestRoofB`, `WestRoofM`, `WestRoofT`, and `isEave`
+tile properties and creates them through the neutral world-object path
+automatically. Flat roof tiles marked `solidfloor` continue to use floor
+construction.
+
+## Native world-object classes
+
+Most JSON-only buildables finish as an `IsoThumpable`, a floor, or a moveable
+world prop. A small number of game objects require a specialized Java world
+class even though they do not require an entity script. Use the stage-level
+`nativeObject` property for these objects.
+
+### Fireplace
+
+~~~json
+"nativeObject": {
+  "type": "fireplace"
+}
+~~~
+
+Knox creates an `IsoFireplace`, not a generic thumpable. This preserves native
+fuel storage, fire and fuel sprites, light, heat, save data, updates, and the
+fireplace context-menu actions. Container type and capacity still come from
+the selected sprite's tile properties.
+
+Knox also detects a fireplace independently for each geometry cell when its
+sprite has either:
+
+- `IsoType = IsoFireplace`; or
+- `container = fireplace`.
+
+Per-cell detection is useful for multi-tile definitions and is the safest
+choice for mixed geometry containing both a functional firebox and decorative
+mantle or chimney cells. A translated name containing “fireplace”, “hearth”,
+or “chimney” never enables fireplace behavior. The tile metadata or explicit
+`nativeObject` declaration must identify the functional object.
+
+### Generator
+
+~~~json
+"nativeObject": {
+  "type": "generator",
+  "item": "Base.Generator"
+}
+~~~
+
+The item is required because B42 initializes `IsoGenerator` state from an
+inventory item. Knox then preserves the authored stage sprite and records the
+normal Knox build metadata. Do not use this declaration for a decorative
+generator sprite.
+
+`nativeObject` is not a substitute for an entity script. Workbenches, craft
+logic, resources, fluid components, sprite-overlay components, and other
+engine-owned entity components still require an entity-backed definition.
 
 ## Placement configuration
 
@@ -311,7 +370,7 @@ Callbacks are names such as `MyAddon.BuildObject.OnIsValid`; they are not code
 strings. `onAddToMenu` controls catalogue visibility and receives `player`,
 `definition`, `stage`, `shouldShowAll`, and `recipe` (the native recipe object
 when an entity reference exists, otherwise nil). `shouldShowAll` follows the
-player's **Show all versions** tick box; do not hardcode your callback around
+player's **All qualities** toggle; do not hardcode your callback around
 one value.
 
 `onIsValid` receives:

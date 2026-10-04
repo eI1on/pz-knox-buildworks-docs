@@ -6,36 +6,28 @@ tableOfContents: false
 ---
 
 import HomeHero from '../../components/HomeHero.astro';
-import FlowStrip from '../../components/FlowStrip.astro';
 import KbwGrid from '../../components/KbwGrid.astro';
 import PathCard from '../../components/PathCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
 
 <HomeHero
-  kicker="Project Zomboid / Build 42"
-  title="Plan first. Build better."
-  tagline="A complete construction catalogue and blueprint workspace for Build 42-with readable requirements, true multi-tile previews, persistent ghost plans, wall finishes, and multiplayer validation."
+  kicker="Project Zomboid · Build 42"
+  title="Build what you imagined."
+  tagline="Find the right piece, see what it needs, and plan a whole build before placing the first wall. This guide covers the current Knox Buildworks catalogue, blueprints, and add-on format."
   actions={[
     { text: 'Player guide', href: './guides/getting-started/', variant: 'primary' },
-    { text: 'Create an add-on', href: './modders/quickstart/', variant: 'secondary' }
-  ]}
-  meta={[
-    'Independent catalogue',
-    'Persistent blueprints',
-    'JSON add-on framework'
+    { text: 'Add-on authoring', href: './modders/quickstart/', variant: 'secondary' }
   ]}
 />
 
-<FlowStrip />
-
-## Start where you are
+## Find your way in
 
 <KbwGrid min="17rem">
   <PathCard
     title="Players"
     icon="hammer"
     href="./guides/getting-started/"
-    cta="Start building"
+    cta="Open player guide"
     links={[
       { text: 'Interface tour', href: './guides/interface-tour/' },
       { text: 'Using the catalogue', href: './guides/catalogue/' },
@@ -44,30 +36,29 @@ import CtaBand from '../../components/CtaBand.astro';
       { text: 'Blueprints, sharing and access', href: './guides/blueprints-and-access/' }
     ]}
   >
-    Install the mod, open the catalogue, inspect real requirements, and take a
-    design from ghost preview to finished construction.
+    Browse by category, compare requirements, build directly, or leave a
+    blueprint ghost to finish later.
   </PathCard>
   <PathCard
     title="Server owners"
     icon="server"
     href="./guides/server-configuration/"
-    cta="Configure a server"
+    cta="Open server guide"
     links={[
-      { text: 'Sandbox and HUD options', href: './guides/server-configuration/' },
+      { text: 'Sandbox and well options', href: './guides/server-configuration/' },
       { text: 'Validation and integrity', href: './reference/validation-and-integrity/' },
       { text: 'Troubleshooting', href: './reference/troubleshooting/' }
     ]}
   >
-    Configure sandbox options, understand the definition integrity handshake, and
-    rely on server-authoritative validation instead of client trust.
+    Set construction rules and blueprint limits, then verify clients have the
+    same definitions before they build.
   </PathCard>
   <PathCard
     title="Add-on authors"
     icon="braces"
     href="./modders/quickstart/"
-    cta="Write definitions"
+    cta="Open author guide"
     links={[
-      { text: 'Add-on Studio', href: './studio/overview/' },
       { text: 'Add-on quickstart', href: './modders/quickstart/' },
       { text: 'Tutorial: creating buildables', href: './modders/creating-buildables/' },
       { text: 'JSON definition format', href: './modders/definitions/' },
@@ -76,38 +67,29 @@ import CtaBand from '../../components/CtaBand.astro';
       { text: 'Testing and release', href: './modders/testing-and-release/' }
     ]}
   >
-    Ship new buildables through manifests and JSON definitions-geometry,
-    groups, variants, finishes, and focused Lua extension hooks.
+    Add buildables with manifests, JSON definitions, translations, and focused
+    Lua hooks where the data model needs them.
   </PathCard>
 </KbwGrid>
 
-## One system, from recipe to finished build
+## What you can do
 
 <KbwGrid min="16rem" bento>
-  <PathCard title="Catalogue & construction" icon="catalogue" wide>
-    Search buildables, inspect real requirements, select material alternatives,
-    rotate a footprint preview, and build through a dedicated timed-action cursor.
+  <PathCard title="Find the right buildable" icon="catalogue" wide>
+    Keep categories and filters in view, inspect the selected recipe beside the
+    results, and choose the exact item alternative when a recipe allows one.
   </PathCard>
   <PathCard title="Planning Mode" icon="compass">
-    Design rooms and floors before construction, place non-blocking ghosts,
-    set a gather area, and turn a plan into a practical build queue.
+    Work with a compact catalogue beside the blueprint workspace. Draw rooms,
+    preview a layout, check supplies, and build ready pieces.
   </PathCard>
   <PathCard title="Multiplayer integrity" icon="shield">
-    Integrity-checked definitions, server-authoritative validation, and
-    per-blueprint view, build, and contribute permission controls.
+    Share plans with view, build, or contribute access. The server checks
+    definitions, resources, placement, and permissions.
   </PathCard>
   <PathCard title="Data-driven add-ons" icon="layers" wide>
-    Add content through manifests and JSON definitions with templates, tags,
-    multi-tile geometry, groups, variants, finishes, and focused Lua hooks.
-  </PathCard>
-  <PathCard
-    title="Add-on Studio"
-    icon="braces"
-    href="./studio/overview/"
-    cta="Open the Studio guide"
-  >
-    Author definitions visually, index local sprites and game data, inspect
-    entity references, validate combinations, and export a complete add-on ZIP.
+    Define groups, variants, finishes, tags, and multi-tile geometry without
+    replacing the vanilla Building Menu.
   </PathCard>
 </KbwGrid>
 
@@ -129,12 +111,12 @@ will activate it.
 :::
 
 <CtaBand
-  title="Ready to plan your next base?"
+  title="Start with the part you need"
   actions={[
     { text: 'Get started', href: './guides/getting-started/', variant: 'primary' },
-    { text: 'Add-on Studio', href: './studio/overview/', variant: 'secondary' }
+    { text: 'Browse the reference', href: './reference/architecture/', variant: 'secondary' }
   ]}
 >
-  Follow the player guide from your first catalogue search to a shared
-  blueprint, or trace how the whole framework fits together.
+  Follow the player guide from your first search to a shared blueprint, or
+  inspect the runtime and definition reference.
 </CtaBand>

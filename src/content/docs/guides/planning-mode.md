@@ -7,9 +7,11 @@ description: Create room layouts and multi-level blueprint ghosts before committ
 
 Open Planning Mode from the Build drawer. It is a dedicated workspace with:
 
-- blueprint management and totals on the left;
-- room, gather-area, build and level tools in the centre;
-- a separate planning catalogue on the right.
+- a compact workspace on the left, with **Plans**, **Pieces**, **Rooms**, and
+  **Supplies** tabs plus level and tool controls;
+- a separate planning catalogue on the right with search, category and
+  subcategory selectors, an All qualities toggle, and group/variant controls;
+- the world visible between them for placing and inspecting the plan.
 
 The server sandbox option **EnablePlanningMode** can disable this feature.
 
@@ -19,13 +21,15 @@ Create a new blueprint, choose it in the list, then set its design level using
 the level controls. The active blueprint level drives new plan coordinates; the
 player does not have to stand on that Z level to design it.
 
-Blueprints store their own rooms, planned buildables, selected variants,
+Use **Preview layout** to inspect the blueprint, including its rooms and supply
+zone, before placing it. Blueprints store their own rooms, planned buildables, selected variants,
 materials, finishes, gather area, permissions and timestamps.
 
 ## Plan buildables
 
-Select content from the Planning catalogue, configure its stage/variant/material
-and finish, then choose **Plan selected buildable**.
+Select content from the Planning catalogue, use its arrows to configure stage,
+variant, material and finish where offered, then choose **Add to plan**. Use
+the **Pieces** tab to review or remove a selected pending placement.
 
 - Walls support drag-to-place lines.
 - Floors support drag-to-place rectangles.
